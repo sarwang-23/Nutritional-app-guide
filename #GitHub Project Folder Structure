@@ -1,0 +1,10 @@
+
+nutrition-app-gemini/
+├── app.py
+├── utils.py
+├── requirements.txt
+├── README.md
+├── screenshots/
+│   ├── home.png
+│   └── nutrition_result.png
+├── demo.mp4
