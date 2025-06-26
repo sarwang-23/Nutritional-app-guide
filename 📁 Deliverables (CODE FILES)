@@ -1,0 +1,51 @@
+app.py
+
+import streamlit as st
+from utils import get_food_nutrition
+
+st.set_page_config(page_title="Nutrition App with Gemini Pro", layout="centered")
+st.title("🥗 Nutrition App Using Gemini Pro")
+st.write("Your Comprehensive Guide to Healthy Eating and Well-being")
+
+# Track daily totals
+if "intake" not in st.session_state:
+    st.session_state.intake = {"calories": 0, "protein": 0, "fat": 0, "carbs": 0}
+
+food = st.text_input("Enter a food item (e.g., Banana, Rice, Apple):")
+
+if st.button("Get Nutrition Info"):
+    data = get_food_nutrition(food)
+    if data:
+        st.success(f"Nutritional facts for {food.title()}")
+        st.write(data)
+        for k in st.session_state.intake:
+            st.session_state.intake[k] += data[k]
+
+    else:
+        st.warning("Food not found. Try Apple, Banana, or Rice.")
+
+st.write("### 🧮 Daily Intake Summary")
+st.write(st.session_state.intake)
+
+st.write("### 🤖 Gemini Pro Suggestion")
+st.info("Eat a balanced diet rich in fruits and vegetables. [Simulated Gemini Pro Response]")
+
+
+
+utils.py
+
+
+def get_food_nutrition(food_name):
+    food_db = {
+        "banana": {"calories": 89, "protein": 1.1, "fat": 0.3, "carbs": 23},
+        "apple": {"calories": 52, "protein": 0.3, "fat": 0.2, "carbs": 14},
+        "rice": {"calories": 130, "protein": 2.7, "fat": 0.3, "carbs": 28}
+    }
+    return food_db.get(food_name.lower())
+
+
+requirements.txt
+streamlit
+pandas
+
+
